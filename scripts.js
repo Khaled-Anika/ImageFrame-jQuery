@@ -98,11 +98,12 @@ function Render(){
         var imageList = $(".image-frame1").find('ul').find('li');
         var random = RandomNumber(0, imageList.length-1);
         var imageItem = imageList.eq(random);
-        imageList.each(function(){
+        imageList.each(function(index){
+            if(index != random){
                 var xOffset = Math.floor(parseInt($(this).offset().left) - parseInt(imageItem.offset().left));
                 var yOffset = Math.floor(parseInt($(this).offset().top) - parseInt(imageItem.offset().top));
                 var imageWidth = Math.floor(imageItem.width());
-                if((xOffset == 0 || yOffset == 0) && (xOffset == imageWidth || yOffset == imageWidth))
+                if((yOffset == 0 || xOffset == 0) && (yOffset == imageWidth || xOffset == imageWidth))
                 {
                     $(this).animate({
                         left : imageItem.css('left'),
@@ -112,9 +113,13 @@ function Render(){
                         left : $(this).css('left'),
                         top : $(this).css('top')
                     }, 1000)
+
+                    return false;   
+
                 }
+            }
         })
-	}
+    }
 
 	 interval = setInterval (function(){ 
                 swap(); 
